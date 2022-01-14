@@ -1,0 +1,44 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CryptoPhunksMarket
+    network: mainnet
+    source:
+      address: "0xd6c037bE7FA60587e174db7A6710f7635d2971e7"
+      abi: CryptoPhunksMarket
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - Paused
+        - PhunkBidEntered
+        - PhunkBidWithdrawn
+        - PhunkBought
+        - PhunkNoLongerForSale
+        - PhunkOffered
+        - Unpaused
+      abis:
+        - name: CryptoPhunksMarket
+          file: ./abis/CryptoPhunksMarket.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: PhunkBidEntered(indexed uint256,uint256,indexed address)
+          handler: handlePhunkBidEntered
+        - event: PhunkBidWithdrawn(indexed uint256,uint256,indexed address)
+          handler: handlePhunkBidWithdrawn
+        - event: PhunkBought(indexed uint256,uint256,indexed address,indexed address)
+          handler: handlePhunkBought
+        - event: PhunkNoLongerForSale(indexed uint256)
+          handler: handlePhunkNoLongerForSale
+        - event: PhunkOffered(indexed uint256,uint256,indexed address)
+          handler: handlePhunkOffered
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/mapping.ts
