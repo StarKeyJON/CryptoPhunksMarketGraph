@@ -11,31 +11,32 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ExampleEntity extends Entity {
+export class OwnershipTransferred extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("count", Value.fromBigInt(BigInt.zero()));
     this.set("previousOwner", Value.fromBytes(Bytes.empty()));
     this.set("newOwner", Value.fromBytes(Bytes.empty()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ExampleEntity entity without an ID");
+    assert(id != null, "Cannot save OwnershipTransferred entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save ExampleEntity entity with non-string ID. " +
+        "Cannot save OwnershipTransferred entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("ExampleEntity", id.toString(), this);
+      store.set("OwnershipTransferred", id.toString(), this);
     }
   }
 
-  static load(id: string): ExampleEntity | null {
-    return changetype<ExampleEntity | null>(store.get("ExampleEntity", id));
+  static load(id: string): OwnershipTransferred | null {
+    return changetype<OwnershipTransferred | null>(
+      store.get("OwnershipTransferred", id)
+    );
   }
 
   get id(): string {
@@ -45,15 +46,6 @@ export class ExampleEntity extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
-  }
-
-  get count(): BigInt {
-    let value = this.get("count");
-    return value!.toBigInt();
-  }
-
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
   }
 
   get previousOwner(): Bytes {
@@ -72,5 +64,407 @@ export class ExampleEntity extends Entity {
 
   set newOwner(value: Bytes) {
     this.set("newOwner", Value.fromBytes(value));
+  }
+}
+
+export class Paused extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("account", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Paused entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Paused entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Paused", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Paused | null {
+    return changetype<Paused | null>(store.get("Paused", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get account(): Bytes {
+    let value = this.get("account");
+    return value!.toBytes();
+  }
+
+  set account(value: Bytes) {
+    this.set("account", Value.fromBytes(value));
+  }
+}
+
+export class PhunkBidEntered extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("phunkIndex", Value.fromBigInt(BigInt.zero()));
+    this.set("value", Value.fromBigInt(BigInt.zero()));
+    this.set("fromAddress", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PhunkBidEntered entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save PhunkBidEntered entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("PhunkBidEntered", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PhunkBidEntered | null {
+    return changetype<PhunkBidEntered | null>(store.get("PhunkBidEntered", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get phunkIndex(): BigInt {
+    let value = this.get("phunkIndex");
+    return value!.toBigInt();
+  }
+
+  set phunkIndex(value: BigInt) {
+    this.set("phunkIndex", Value.fromBigInt(value));
+  }
+
+  get value(): BigInt {
+    let value = this.get("value");
+    return value!.toBigInt();
+  }
+
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
+  }
+
+  get fromAddress(): Bytes {
+    let value = this.get("fromAddress");
+    return value!.toBytes();
+  }
+
+  set fromAddress(value: Bytes) {
+    this.set("fromAddress", Value.fromBytes(value));
+  }
+}
+
+export class PhunkBidWithdrawn extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("phunkIndex", Value.fromBigInt(BigInt.zero()));
+    this.set("value", Value.fromBigInt(BigInt.zero()));
+    this.set("fromAddress", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PhunkBidWithdrawn entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save PhunkBidWithdrawn entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("PhunkBidWithdrawn", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PhunkBidWithdrawn | null {
+    return changetype<PhunkBidWithdrawn | null>(
+      store.get("PhunkBidWithdrawn", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get phunkIndex(): BigInt {
+    let value = this.get("phunkIndex");
+    return value!.toBigInt();
+  }
+
+  set phunkIndex(value: BigInt) {
+    this.set("phunkIndex", Value.fromBigInt(value));
+  }
+
+  get value(): BigInt {
+    let value = this.get("value");
+    return value!.toBigInt();
+  }
+
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
+  }
+
+  get fromAddress(): Bytes {
+    let value = this.get("fromAddress");
+    return value!.toBytes();
+  }
+
+  set fromAddress(value: Bytes) {
+    this.set("fromAddress", Value.fromBytes(value));
+  }
+}
+
+export class PhunkBought extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("phunkIndex", Value.fromBigInt(BigInt.zero()));
+    this.set("value", Value.fromBigInt(BigInt.zero()));
+    this.set("fromAddress", Value.fromBytes(Bytes.empty()));
+    this.set("toAddress", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PhunkBought entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save PhunkBought entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("PhunkBought", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PhunkBought | null {
+    return changetype<PhunkBought | null>(store.get("PhunkBought", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get phunkIndex(): BigInt {
+    let value = this.get("phunkIndex");
+    return value!.toBigInt();
+  }
+
+  set phunkIndex(value: BigInt) {
+    this.set("phunkIndex", Value.fromBigInt(value));
+  }
+
+  get value(): BigInt {
+    let value = this.get("value");
+    return value!.toBigInt();
+  }
+
+  set value(value: BigInt) {
+    this.set("value", Value.fromBigInt(value));
+  }
+
+  get fromAddress(): Bytes {
+    let value = this.get("fromAddress");
+    return value!.toBytes();
+  }
+
+  set fromAddress(value: Bytes) {
+    this.set("fromAddress", Value.fromBytes(value));
+  }
+
+  get toAddress(): Bytes {
+    let value = this.get("toAddress");
+    return value!.toBytes();
+  }
+
+  set toAddress(value: Bytes) {
+    this.set("toAddress", Value.fromBytes(value));
+  }
+}
+
+export class PhunkNoLongerForSale extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("phunkIndex", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PhunkNoLongerForSale entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save PhunkNoLongerForSale entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("PhunkNoLongerForSale", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PhunkNoLongerForSale | null {
+    return changetype<PhunkNoLongerForSale | null>(
+      store.get("PhunkNoLongerForSale", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get phunkIndex(): BigInt {
+    let value = this.get("phunkIndex");
+    return value!.toBigInt();
+  }
+
+  set phunkIndex(value: BigInt) {
+    this.set("phunkIndex", Value.fromBigInt(value));
+  }
+}
+
+export class PhunkOffered extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("phunkIndex", Value.fromBigInt(BigInt.zero()));
+    this.set("minValue", Value.fromBigInt(BigInt.zero()));
+    this.set("toAddress", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save PhunkOffered entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save PhunkOffered entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("PhunkOffered", id.toString(), this);
+    }
+  }
+
+  static load(id: string): PhunkOffered | null {
+    return changetype<PhunkOffered | null>(store.get("PhunkOffered", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get phunkIndex(): BigInt {
+    let value = this.get("phunkIndex");
+    return value!.toBigInt();
+  }
+
+  set phunkIndex(value: BigInt) {
+    this.set("phunkIndex", Value.fromBigInt(value));
+  }
+
+  get minValue(): BigInt {
+    let value = this.get("minValue");
+    return value!.toBigInt();
+  }
+
+  set minValue(value: BigInt) {
+    this.set("minValue", Value.fromBigInt(value));
+  }
+
+  get toAddress(): Bytes {
+    let value = this.get("toAddress");
+    return value!.toBytes();
+  }
+
+  set toAddress(value: Bytes) {
+    this.set("toAddress", Value.fromBytes(value));
+  }
+}
+
+export class Unpaused extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("account", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Unpaused entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Unpaused entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Unpaused", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Unpaused | null {
+    return changetype<Unpaused | null>(store.get("Unpaused", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get account(): Bytes {
+    let value = this.get("account");
+    return value!.toBytes();
+  }
+
+  set account(value: Bytes) {
+    this.set("account", Value.fromBytes(value));
   }
 }
