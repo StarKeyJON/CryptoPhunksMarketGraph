@@ -1,6 +1,49 @@
-type ExampleEntity @entity {
+type OwnershipTransferred @entity {
   id: ID!
-  count: BigInt!
   previousOwner: Bytes! # address
   newOwner: Bytes! # address
+}
+
+type Paused @entity {
+  id: ID!
+  account: Bytes! # address
+}
+
+type PhunkBidEntered @entity {
+  id: ID!
+  phunkIndex: BigInt! # uint256
+  value: BigInt! # uint256
+  fromAddress: Bytes! # address
+}
+
+type PhunkBidWithdrawn @entity {
+  id: ID!
+  phunkIndex: BigInt! # uint256
+  value: BigInt! # uint256
+  fromAddress: Bytes! # address
+}
+
+type PhunkBought @entity {
+  id: ID!
+  phunkIndex: BigInt! # uint256
+  value: BigInt! # uint256
+  fromAddress: Bytes! # address
+  toAddress: Bytes! # address
+}
+
+type PhunkNoLongerForSale @entity {
+  id: ID!
+  phunkIndex: BigInt! # uint256
+}
+
+type PhunkOffered @entity {
+  id: ID!
+  phunkIndex: BigInt! # uint256
+  minValue: BigInt! # uint256
+  toAddress: Bytes! # address
+}
+
+type Unpaused @entity {
+  id: ID!
+  account: Bytes! # address
 }
