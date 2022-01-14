@@ -1,6 +1,14 @@
-import { BigInt } from "@graphprotocol/graph-ts"
 import {
-  CryptoPhunksMarket,
+  OwnershipTransferred as OwnershipTransferredEvent,
+  Paused as PausedEvent,
+  PhunkBidEntered as PhunkBidEnteredEvent,
+  PhunkBidWithdrawn as PhunkBidWithdrawnEvent,
+  PhunkBought as PhunkBoughtEvent,
+  PhunkNoLongerForSale as PhunkNoLongerForSaleEvent,
+  PhunkOffered as PhunkOfferedEvent,
+  Unpaused as UnpausedEvent
+} from "../generated/CryptoPhunksMarket/CryptoPhunksMarket"
+import {
   OwnershipTransferred,
   Paused,
   PhunkBidEntered,
@@ -9,66 +17,82 @@ import {
   PhunkNoLongerForSale,
   PhunkOffered,
   Unpaused
-} from "../generated/CryptoPhunksMarket/CryptoPhunksMarket"
-import { ExampleEntity } from "../generated/schema"
+} from "../generated/schema"
 
-export function handleOwnershipTransferred(event: OwnershipTransferred): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
-
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (!entity) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
-
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
-
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
-
-  // Entity fields can be set based on event parameters
+export function handleOwnershipTransferred(
+  event: OwnershipTransferredEvent
+): void {
+  let entity = new OwnershipTransferred(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  )
   entity.previousOwner = event.params.previousOwner
   entity.newOwner = event.params.newOwner
-
-  // Entities can be written to the store with `.save()`
   entity.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.owner(...)
-  // - contract.paused(...)
-  // - contract.pendingWithdrawals(...)
-  // - contract.phunkBids(...)
-  // - contract.phunksAddress(...)
-  // - contract.phunksOfferedForSale(...)
 }
 
-export function handlePaused(event: Paused): void {}
+export function handlePaused(event: PausedEvent): void {
+  let entity = new Paused(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  )
+  entity.account = event.params.account
+  entity.save()
+}
 
-export function handlePhunkBidEntered(event: PhunkBidEntered): void {}
+export function handlePhunkBidEntered(event: PhunkBidEnteredEvent): void {
+  let entity = new PhunkBidEntered(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  )
+  entity.phunkIndex = event.params.phunkIndex
+  entity.value = event.params.value
+  entity.fromAddress = event.params.fromAddress
+  entity.save()
+}
 
-export function handlePhunkBidWithdrawn(event: PhunkBidWithdrawn): void {}
+export function handlePhunkBidWithdrawn(event: PhunkBidWithdrawnEvent): void {
+  let entity = new PhunkBidWithdrawn(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  )
+  entity.phunkIndex = event.params.phunkIndex
+  entity.value = event.params.value
+  entity.fromAddress = event.params.fromAddress
+  entity.save()
+}
 
-export function handlePhunkBought(event: PhunkBought): void {}
+export function handlePhunkBought(event: PhunkBoughtEvent): void {
+  let entity = new PhunkBought(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  )
+  entity.phunkIndex = event.params.phunkIndex
+  entity.value = event.params.value
+  entity.fromAddress = event.params.fromAddress
+  entity.toAddress = event.params.toAddress
+  entity.save()
+}
 
-export function handlePhunkNoLongerForSale(event: PhunkNoLongerForSale): void {}
+export function handlePhunkNoLongerForSale(
+  event: PhunkNoLongerForSaleEvent
+): void {
+  let entity = new PhunkNoLongerForSale(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  )
+  entity.phunkIndex = event.params.phunkIndex
+  entity.save()
+}
 
-export function handlePhunkOffered(event: PhunkOffered): void {}
+export function handlePhunkOffered(event: PhunkOfferedEvent): void {
+  let entity = new PhunkOffered(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  )
+  entity.phunkIndex = event.params.phunkIndex
+  entity.minValue = event.params.minValue
+  entity.toAddress = event.params.toAddress
+  entity.save()
+}
 
-export function handleUnpaused(event: Unpaused): void {}
+export function handleUnpaused(event: UnpausedEvent): void {
+  let entity = new Unpaused(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  )
+  entity.account = event.params.account
+  entity.save()
+}
